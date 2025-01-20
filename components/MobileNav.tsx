@@ -1,19 +1,35 @@
 'use client'
-import { sidebarLinks } from '@/constants'
-import { cn } from '@/lib/utils'
+import React from 'react'
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+  } from "@/components/ui/sheet"
 import Image from 'next/image'
 import Link from 'next/link'
+import { sidebarLinks } from '@/constants'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import { cn } from '@/lib/utils'
 
-export const Sidebar = ({user}: SiderbarProps) => {
 
-  const pathname = usePathname(); 
+
+export const MobileNav = ({ user }: MobileNavProps) => {
+
+    const pathname = usePathname();
   return (
-    <section className="sidebar">
-      <nav className='flex flex-col gap-4'>
-        <Link href='/' className='mb-12 cursor-pointer flex items-center gap-2' >
-        <Image src="/icons/logo.svg" width={34} height={34} className='size-[24px] max-xl:size-14' alt='header logo'/>
+    <section className='w-full max-w-[264px]'>
+        <Sheet>
+          <SheetTrigger>
+            <Image src="/icons/hamburger-svgrepo-com.svg" width={30} height={30} alt="menu" className='cursor-pointer'/>
+          </SheetTrigger>
+
+          <SheetContent side={'left'} className='border-none bg-white'> 
+            
+          <Link href='/' className=' cursor-pointer flex items-center gap-1 px-4' >
+        <Image src="/icons/logo.svg" width={34} height={34}  alt='header logo'/>
 
         <h1 className='sidebar-logo'>
           Recruiment
@@ -48,9 +64,10 @@ export const Sidebar = ({user}: SiderbarProps) => {
             </Link>
           )
         })}
+          </SheetContent>
+        </Sheet>
 
-      </nav>
-        
+
     </section>
   )
 }
