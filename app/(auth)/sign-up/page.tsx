@@ -1,10 +1,11 @@
+
 import React from 'react'
 
 const SignUp = () => {
   return (
-    <div>
+    <section className='flex-center size-full '>
       SignIn
-    </div>
+    </section>
   )
 }
 

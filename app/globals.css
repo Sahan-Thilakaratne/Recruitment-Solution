@@ -162,6 +162,10 @@
     @apply h-[120px] w-full bg-gradient-mesh bg-cover bg-no-repeat;
   }
 
+  .bg-gradient-mesh{
+    background-image: url('/icons/large-triangles.svg');
+  }
+
   .profile {
     @apply relative flex px-6 max-xl:justify-center;
   }
@@ -169,6 +173,8 @@
   .profile-img {
     @apply flex-center absolute -top-8 size-24 rounded-full bg-gray-100 border-8 border-white p-2 shadow-profile;
   }
+
+  
 
   .profile-details {
     @apply flex flex-col pt-24;

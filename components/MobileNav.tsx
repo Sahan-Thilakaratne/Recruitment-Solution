@@ -2,6 +2,7 @@
 import React from 'react'
 import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetDescription,
     SheetHeader,
@@ -31,39 +32,60 @@ export const MobileNav = ({ user }: MobileNavProps) => {
           <Link href='/' className=' cursor-pointer flex items-center gap-1 px-4' >
         <Image src="/icons/logo.svg" width={34} height={34}  alt='header logo'/>
 
-        <h1 className='sidebar-logo'>
+        <h1 className='text-26 font-ibm-plex-serif font-bold text-black-1'>
           Recruiment
         </h1>
         
         </Link>
 
-        {sidebarLinks.map((item) => {
+        <div className='mobile-nav-sheet'>
+          <SheetClose asChild>
+            <nav className='flex h-full flex-col gap-6 pt-16 text-white'>
 
-          const isActive = pathname === item.route ||pathname.startsWith('${item.route}/')
+              {sidebarLinks.map((item) => {
+                            
+                const isActive = pathname === item.route ||pathname.startsWith('${item.route}/')
+                            
+                return(
+                  <SheetClose asChild key={item.route}> 
 
-          return(
-            <Link href={item.route} key={item.label} 
-            className={cn('sidebar-link', {
-              'bg-bank-gradient': 
-              isActive
-            })}>
 
-              <div
-              className='relative size-6'>
-                <Image 
-                  src={item.imgURL}
-                  alt={item.label}
-                  fill
-                  className={cn({'brightness-[3] invert-0' : isActive})}/>
+                  <Link href={item.route} key={item.label} 
+                      className={cn('mobilenav-sheet_close w-full', {
+                        'bg-bank-gradient': 
+                        isActive
+                      })}>
+                  
+                    
+                      <Image 
+                        src={item.imgURL}
+                        alt={item.label}
+                        width={20}
+                        height={20}
+                        className={cn({'brightness-[3] invert-0' : isActive})}/>
 
-              </div>
+                    
+                
+                    <p className = {cn('text-16 font-semibold text-black-2', { 'text-white': isActive})}>
+                      {item.label}
+                    </p>
+                  </Link>
 
-              <p className = {cn('sidebar-label', { '!text-white': isActive})}>
-                {item.label}
-              </p>
-            </Link>
-          )
-        })}
+                  </SheetClose>
+                )
+              })}
+
+              USER
+
+            </nav>
+
+          </SheetClose>
+
+          FOOTER
+
+        </div>
+
+        
           </SheetContent>
         </Sheet>
 
