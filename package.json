@@ -17,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "input": "^1.0.1",
+    "jose": "^5.9.6",
     "lucide-react": "^0.469.0",
     "next": "14.2.16",
     "query-string": "^9.1.1",

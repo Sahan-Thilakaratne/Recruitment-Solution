@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useActionState, useState } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { Loader2 } from 'lucide-react'
 import { Select, SelectItem } from '@/components/ui/select';
+import { login } from '@/app/(auth)/actions'
  
 
 
@@ -43,6 +44,8 @@ const signInSchema = z.object({
 
 export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
 
+  
+
   const formSchema = type === 'sign-up' ? signUpSchema : signInSchema;
 
   const [user, setUser] = useState(null);
@@ -63,8 +66,9 @@ export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    await login('contact@cosdensolutions.io', '12345678');
   };
 
   return (
