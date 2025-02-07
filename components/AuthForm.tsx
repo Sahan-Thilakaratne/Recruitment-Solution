@@ -67,8 +67,10 @@ export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
     console.log(values);
     await login('contact@cosdensolutions.io', '12345678');
+    setIsLoading(false);
   };
 
   return (
