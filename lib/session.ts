@@ -2,7 +2,7 @@ import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
-const secretKey = process.env.SESSION_SECRET;
+const secretKey = "4r43r4r34r34r34r34r3";
 const encodedKey = new TextEncoder().encode(secretKey);
 
 export async function createSession(userId: string) {

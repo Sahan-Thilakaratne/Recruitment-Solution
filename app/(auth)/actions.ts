@@ -5,6 +5,8 @@ import { z } from "zod";
 
 import { redirect } from "next/navigation";
 import { createSession, deleteSession } from "@/lib/session";
+import { error } from "console";
+import { errors } from "jose";
 
 const testUser = {
   id: "1",
@@ -21,24 +23,52 @@ const loginSchema = z.object({
 });
 
 export async function login(Email: any, Password: any) {
-  
-    const email = Email;
-    const password = Password;
+  console.log("Here it works: ", Email, Password)
+    try{
+      const response = await fetch("http://localhost:9090/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: Email, password: Password}),
+      })
 
-  //const { email, password } = result.data;
+      const data = await response.json();
+      console.log("Response: ", response)
 
-  if (email !== testUser.email || password !== testUser.password) {
-    return {
-      errors: {
-        email: ["Invalid email or password"],
-      },
-    };
-  }
+      if(!response.ok) {
+        return{
+          errors: {
+            email: [data.message || "Invalid email or password"],
+          }
+        }
+      }
 
-  //await createSession(testUser.id);
-  await createSession(testUser.id);
+      const username = data.fullname;
 
-  redirect("/");
+      if(!username){
+        return{
+          errors: {
+            email: ["Invalid response from server"]
+          }
+        }
+      }
+
+      await createSession(username);
+
+      //
+
+    }catch (error){
+      
+      console.error("Login failed", error);
+      return{
+        errors: {
+          email: ["Something went wrong. Please try again later."]
+        }
+      }
+    }
+
+    redirect("/");
 }
 
 export async function logout() {
