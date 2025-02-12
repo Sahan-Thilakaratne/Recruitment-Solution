@@ -2,11 +2,25 @@
 import HeaderBox from '@/components/HeaderBox'
 import { RightSidebar } from '@/components/RightSidebar'
 import TotalBalanceBox from '@/components/TotalBalanceBox'
-import React from 'react'
+import { getCurrentUser } from '@/lib/session'
+import React, { useEffect } from 'react'
+import { useSession } from "next-auth/react";
+
 
 const Home = () => {
 
   const loggedIn = { firstName: 'Sahan', lastName: 'Thilakaratne', email: 'sahanpradeeptha@gmail.com' }
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try{
+        const res = await fetch("auth/me");
+        const data = await res.json();
+      }
+    }
+  })
+
+  
 
   return (
     <section className='home'>
@@ -15,7 +29,7 @@ const Home = () => {
           <HeaderBox 
           type="greeting"
           title = "Welcome"
-          user= {loggedIn?.firstName || 'Guest'}
+          user= {session?.userId || 'Guest'}
           subtext='Create and manage your account'/>
 
 

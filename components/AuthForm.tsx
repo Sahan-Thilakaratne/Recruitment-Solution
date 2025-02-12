@@ -67,10 +67,12 @@ export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
     setIsLoading(true)
     console.log(values);
     await login('sahan@gmail.com', 'sahan123');
     setIsLoading(false)
+
   };
 
   return (
