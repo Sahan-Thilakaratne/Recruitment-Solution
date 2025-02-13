@@ -50,9 +50,6 @@ export async function decrypt(session: string | undefined = "") {
 
 export async function getCurrentUser(){
 
-  const currentUser = await decrypt(cookies().get("session")?.value);
-  return currentUser?.userId || null;
+  const session = await decrypt(cookies().get("session")?.value);
+  return session?.username || null;
 }
-
-
-

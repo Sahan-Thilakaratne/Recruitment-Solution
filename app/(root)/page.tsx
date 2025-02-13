@@ -3,25 +3,20 @@ import HeaderBox from '@/components/HeaderBox'
 import { RightSidebar } from '@/components/RightSidebar'
 import TotalBalanceBox from '@/components/TotalBalanceBox'
 import { getCurrentUser } from '@/lib/session'
-import React, { use, useEffect, useState } from 'react'
-import { set } from 'zod'
+import React, { useEffect, useState } from 'react'
+
+
 
 const Home = () => {
 
   //const loggedIn = { firstName: 'Sahan', lastName: 'Thilakaratne', email: 'sahanpradeeptha@gmail.com' }
   const [loggedIn, setLoggedIn] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try{
-        const response = await getCurrentUser();
-        setLoggedIn(response);
-      }catch(error){
-        console.error(error)
-      }
-    }
-    fetchUser();
-  }, [])
+  
+
+  
+
+  
 
   return (
     <section className='home'>
@@ -30,7 +25,7 @@ const Home = () => {
           <HeaderBox 
           type="greeting"
           title = "Welcome"
-          user= {loggedIn?.firstName || 'Guest'}
+          user= {session?.userId || 'Guest'}
           subtext='Create and manage your account'/>
 
 

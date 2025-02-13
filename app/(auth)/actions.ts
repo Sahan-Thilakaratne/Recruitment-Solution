@@ -69,6 +69,7 @@ export async function login(Email: any, Password: any) {
     }
 
     redirect("/");
+
 }
 
 export async function logout() {
@@ -76,3 +77,5 @@ export async function logout() {
   await deleteSession();
   redirect("/login");
 }
+
+

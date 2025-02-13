@@ -45,6 +45,30 @@ const signInSchema = z.object({
 export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
 
   
+    const fetchUserDetails = async () => {
+      try{
+
+        const response = await fetch('http://localhost:9090/api/users/current', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: "sahan@gmail.com"
+          }),
+          
+        });
+
+        const data = await response.json();
+        localStorage.setItem('currentUserName', JSON.stringify(data.fullname));
+        
+      }catch(error){
+        console.error(error)
+      }
+    }
+    
+
+  
 
   const formSchema = type === 'sign-up' ? signUpSchema : signInSchema;
 
@@ -67,10 +91,13 @@ export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsLoading(true);
+
+    setIsLoading(true)
     console.log(values);
     await login('sahan@gmail.com', 'sahan123');
-    setIsLoading(false);
+    await fetchUserDetails();
+    setIsLoading(false)
+
   };
 
   return (
