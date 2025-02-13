@@ -14,10 +14,13 @@ export async function createSession(userId: string) {
     secure: true,
     expires: expiresAt,
   });
+
+  
 }
 
 export async function deleteSession() {
   cookies().delete("session");
+  localStorage.removeItem("currentUser");
 }
 
 type SessionPayload = {
@@ -44,3 +47,12 @@ export async function decrypt(session: string | undefined = "") {
     console.log("Failed to verify session");
   }
 }
+
+export async function getCurrentUser(){
+
+  const currentUser = await decrypt(cookies().get("session")?.value);
+  return currentUser?.userId || null;
+}
+
+
+

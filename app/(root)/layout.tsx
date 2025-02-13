@@ -5,16 +5,17 @@ import { Inter, IBM_Plex_Serif } from "next/font/google"
 import { Sidebar } from "@/components/Sidebar";
 import Image from "next/image";
 import { MobileNav } from "@/components/MobileNav";
+import { getCurrentUser } from "@/lib/session";
 
 
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
 
-  const loggedIn = { firstName: 'Sahan', lastName: 'Thilakaratne' };
+  const loggedIn = await getCurrentUser();
 
   return (
     <main className="flex h-screen w-full font-inter">
