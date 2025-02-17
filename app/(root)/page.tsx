@@ -9,12 +9,10 @@ import React, { useEffect, useState } from 'react'
 
 const Home = () => {
 
-  //const loggedIn = { firstName: 'Sahan', lastName: 'Thilakaratne', email: 'sahanpradeeptha@gmail.com' }
-  const [loggedIn, setLoggedIn] = useState<string | null>(null);
-
+  const loggedIn = { firstName: 'Sahan', lastName: 'Thilakaratne', email: 'sahanpradeeptha@gmail.com' }
   
 
-  
+   
 
   
 
@@ -25,7 +23,7 @@ const Home = () => {
           <HeaderBox 
           type="greeting"
           title = "Welcome"
-          user= {session?.userId || 'Guest'}
+          user= {loggedIn?.firstName || 'Guest'}
           subtext='Create and manage your account'/>
 
 

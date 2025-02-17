@@ -19,8 +19,9 @@ import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { Loader2 } from 'lucide-react'
 import { Select, SelectItem } from '@/components/ui/select';
-import { login } from '@/app/(auth)/actions'
- 
+import {  login } from '@/app/(auth)/actions'
+import { redirect } from "next/navigation";
+//import { useRouter } from 'next/router'
 
 
 
@@ -45,31 +46,10 @@ const signInSchema = z.object({
 export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
 
   
-    const fetchUserDetails = async () => {
-      try{
-
-        const response = await fetch('http://localhost:9090/api/users/current', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: "sahan@gmail.com"
-          }),
-          
-        });
-
-        const data = await response.json();
-        localStorage.setItem('currentUserName', JSON.stringify(data.fullname));
-        
-      }catch(error){
-        console.error(error)
-      }
-    }
-    
+      
 
   
-
+  
   const formSchema = type === 'sign-up' ? signUpSchema : signInSchema;
 
   const [user, setUser] = useState(null);
@@ -94,9 +74,17 @@ export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
 
     setIsLoading(true)
     console.log(values);
-    await login('sahan@gmail.com', 'sahan123');
-    await fetchUserDetails();
+    const result = await login('sahan@gmail.com', 'sahan123');
+    //console.log("Resultttttttttttttttttttttttttttt: ", result.data)
+    if(result?.data){
+      console.log("Hiiiiiiiiiiiiiii: ", result)
+      localStorage.setItem('currentUser', result.data);
+      
+    }
+    
     setIsLoading(false)
+
+    
 
   };
 

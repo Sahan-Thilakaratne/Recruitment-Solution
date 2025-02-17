@@ -34,7 +34,7 @@ export async function login(Email: any, Password: any) {
       })
 
       const data = await response.json();
-      console.log("Response: ", response)
+      //console.log("Response: ", response)
 
       if(!response.ok) {
         return{
@@ -68,9 +68,44 @@ export async function login(Email: any, Password: any) {
       }
     }
 
-    redirect("/");
+    try{
+
+      const response = await fetch('http://localhost:9090/api/users/getUserDetails', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "sahan@gmail.com"
+        }),
+        
+      });
+
+      const data = await response.json();
+      console.log("Adooooooooooo", data)
+      console.log("status::::", response.status)
+
+      if(response.status !== 200){
+        return{ errors: { email: [data.message || "Invalid email"]}};
+      }
+
+      await directToPages();
+
+      return {data: data.fullname};
+
+      
+    }catch(error){
+      console.error("Error: ", error)
+    }
+
 
 }
+
+
+export async function directToPages(){
+  redirect("/")
+}
+ 
 
 export async function logout() {
   //await deleteSession();
