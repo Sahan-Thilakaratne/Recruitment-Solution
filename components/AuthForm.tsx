@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { z } from "zod"
+import { set, z } from "zod"
 import { Loader2 } from 'lucide-react'
 import { Select, SelectItem } from '@/components/ui/select';
 import {  login } from '@/app/(auth)/actions'
@@ -43,10 +43,7 @@ const signInSchema = z.object({
 
 
 
-export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
-
-  
-      
+export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {      
 
   
   
@@ -54,6 +51,7 @@ export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
 
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,17 +70,45 @@ export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
-    setIsLoading(true)
-    console.log(values);
-    const result = await login('sahan@gmail.com', 'sahan123');
-    //console.log("Resultttttttttttttttttttttttttttt: ", result.data)
-    if(result?.data){
-      console.log("Hiiiiiiiiiiiiiii: ", result)
-      localStorage.setItem('currentUser', result.data);
-      
+    if(type === 'sign-in'){
+
+      try{
+
+        setIsLoading(true)
+        setErrorMessage(null);
+
+        console.log(values);
+        const result = await login(values.email, values.password);
+        console.log("Invalid message: ", result);
+
+        if(result?.errorMessage){
+          console.log("Triggered")
+          console.log("Message: ", result.errorMessage);
+          setErrorMessage(result.errorMessage);
+          setIsLoading(false);
+        }
+        
+        if(result?.data){
+
+          localStorage.setItem('currentUser', result.data);
+          window.location.href = "/";
+
+        } 
+
+        setIsLoading(false)
+
+      }catch(error){
+
+        setErrorMessage("Something went wrong. Please try again later.");
+      }
+
+        
+        
+    } else {
+      setIsLoading(true);
     }
+
     
-    setIsLoading(false)
 
     
 
@@ -235,6 +261,11 @@ export const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
                     </>
                   ) : type === 'sign-in' ? 'Sign In' : 'Sign Up'}
                 </Button>
+
+                {errorMessage && (
+                  <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
+                )}
+
               </div>
             </form>
           </Form>

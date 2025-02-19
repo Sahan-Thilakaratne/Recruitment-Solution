@@ -1,4 +1,5 @@
 'use client'
+import { FileUpload } from '@/components/FileUpload'
 import HeaderBox from '@/components/HeaderBox'
 import { RightSidebar } from '@/components/RightSidebar'
 import TotalBalanceBox from '@/components/TotalBalanceBox'
@@ -9,10 +10,11 @@ import React, { useEffect, useState } from 'react'
 
 const Home = () => {
 
-  const loggedIn = { firstName: 'Sahan', lastName: 'Thilakaratne', email: 'sahanpradeeptha@gmail.com' }
-  
+  const loggedIn = { firstName: '', lastName: '', email: '' }
 
-   
+  loggedIn.firstName = localStorage.getItem('currentUser')??''
+
+  console.log("Logged in user: ", loggedIn)
 
   
 
@@ -37,6 +39,10 @@ const Home = () => {
         </header>
 
         RECENT TRANSACTIONS
+
+        <FileUpload />
+
+        
       </div>
 
       <RightSidebar 

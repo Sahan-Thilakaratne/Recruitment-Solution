@@ -36,37 +36,30 @@ export async function login(Email: any, Password: any) {
       const data = await response.json();
       //console.log("Response: ", response)
 
-      if(!response.ok) {
-        return{
-          errors: {
-            email: [data.message || "Invalid email or password"],
-          }
-        }
+      if(response.status === 401) {
+        
+        return { errorMessage: data.message || "Invalid email or password" };
+
+      }
+
+      if(!data.fullname){
+        return { errorMessage: "Invalid response from server" };
       }
 
       const username = data.fullname;
 
-      if(!username){
-        return{
-          errors: {
-            email: ["Invalid response from server"]
-          }
-        }
-      }
 
       await createSession(username);
-
-      //
 
     }catch (error){
       
       console.error("Login failed", error);
       return{
-        errors: {
-          email: ["Something went wrong. Please try again later."]
-        }
+        errorMessage: "An error occurred while logging in",
       }
     }
+
+    //Local storage setting
 
     try{
 
@@ -82,14 +75,13 @@ export async function login(Email: any, Password: any) {
       });
 
       const data = await response.json();
-      console.log("Adooooooooooo", data)
-      console.log("status::::", response.status)
+      
 
       if(response.status !== 200){
         return{ errors: { email: [data.message || "Invalid email"]}};
       }
 
-      await directToPages();
+      //await directToPages();
 
       return {data: data.fullname};
 
@@ -103,6 +95,7 @@ export async function login(Email: any, Password: any) {
 
 
 export async function directToPages(){
+  console.log("Logging this")
   redirect("/")
 }
  
