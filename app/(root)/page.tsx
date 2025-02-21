@@ -1,6 +1,7 @@
 'use client'
 import { FileUpload } from '@/components/FileUpload'
 import HeaderBox from '@/components/HeaderBox'
+import { MyProfile } from '@/components/MyProfile'
 import { RightSidebar } from '@/components/RightSidebar'
 import TotalBalanceBox from '@/components/TotalBalanceBox'
 import { getCurrentUser } from '@/lib/session'
@@ -41,6 +42,7 @@ const Home = () => {
         RECENT TRANSACTIONS
 
         <FileUpload />
+        
 
         
       </div>
